@@ -13,25 +13,82 @@ use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login', methods: ['GET', 'POST'])]
-public function login(AuthenticationUtils $authenticationUtils): Response
-{
-    $error = $authenticationUtils->getLastAuthenticationError();
-    $email = $authenticationUtils->getLastUsername();
+    #[Route(path: '/register', name: 'app_register', methods: ['GET', 'POST'])]
+    public function register(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+            $username = $request->request->get('username');
+            $password = $request->request->get('password');
+            $repeatedPassword = $request->request->get('repeated-password');
 
-    if ($error) {
-        $this->addFlash('error', 'Mot de passe ou email incorrect');
+            // Vérifications
+            if ($password !== $repeatedPassword) {
+                $this->addFlash('error', 'Les mots de passe ne correspondent pas.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
+                $this->addFlash('error', 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->addFlash('error', 'L\'adresse email est invalide.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+            if ($existingUser) {
+                $this->addFlash('error', 'Un compte avec cet email existe déjà.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            $existingUsername = $entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+            if ($existingUsername) {
+                $this->addFlash('error', 'Ce nom d\'utilisateur est déjà pris.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            // Création et enregistrement de l'utilisateur
+            $user = new User();
+            $user->setEmail($email);
+            $user->setUsername($username);
+            $user->setRoles(['ROLE_USER']);
+            $user->setPassword($passwordHasher->hashPassword($user, $password));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('auth/register.html.twig');
     }
 
-    return $this->render('auth/login.html.twig', [
-        'email' => $email,
-        'error' => $error,
-    ]);
-}
+    #[Route(path: '/login', name: 'app_login', methods: ['GET', 'POST'])]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $email = $authenticationUtils->getLastUsername();
 
+        if ($error) {
+            $this->addFlash('error', 'Mot de passe ou email incorrect');
+        }
+
+        return $this->render('auth/login.html.twig', [
+            'email' => $email,
+            'error' => $error,
+        ]);
+    }
 
     #[Route(path: '/logout', name: 'app_logout', methods: ['GET'])]
     public function logout(): void
@@ -81,7 +138,7 @@ public function login(AuthenticationUtils $authenticationUtils): Response
             ->from('hello@example.com')
             ->to($email)
             ->subject('Réinitialisation de votre mot de passe')
-            ->htmlTemplate('email/reset_email.html.twig')
+            ->htmlTemplate('auth/reset_email.html.twig')
             ->context([
                 'reset_link' => $resetLink,
                 'user_email' => $email,
@@ -115,8 +172,13 @@ public function login(AuthenticationUtils $authenticationUtils): Response
                 return $this->redirectToRoute('page_reset_password', ['token' => $token]);
             }
 
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
+                $this->addFlash('error', 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.');
+                return $this->redirectToRoute('page_reset_password', ['token' => $token]);
+            }
+
             $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
-            $user->setResetToken(null); 
+            $user->setResetToken(null);
 
             $entityManager->persist($user);
             $entityManager->flush();

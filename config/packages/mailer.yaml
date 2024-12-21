@@ -1,3 +1,9 @@
+# config/packages/mailer.yaml
+
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+        headers:
+            From: 'hello@example.com'
+        envelope:
+            sender: 'hello@example.com'

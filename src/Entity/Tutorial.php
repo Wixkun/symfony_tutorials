@@ -38,6 +38,25 @@ class Tutorial
     /**
      * @var Collection<int, Comment>
      */
+
+     #[ORM\Column(type: Types::TEXT)]
+     private ?string $content = null;
+     
+     // Getter
+     public function getContent(): ?string
+     {
+         return $this->content;
+     }
+     
+     // Setter
+     public function setContent(?string $content): static
+     {
+         $this->content = $content;
+     
+         return $this;
+     }
+     
+
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'tutorial')]
     private Collection $comments;
 

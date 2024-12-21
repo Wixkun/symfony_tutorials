@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ tutorial.title }}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            /* Styles personnalisés pour la typographie */
+            @layer utilities {
+                .prose-custom {
+                    @apply prose max-w-none prose-headings:font-bold prose-headings:text-gray-800 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-700 prose-ul:list-disc prose-ul:pl-6 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-mono;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+        <!-- Header -->
+        <header class="bg-white shadow">
+            <div class="container mx-auto flex justify-between items-center py-4 px-6">
+                <a href="/" class="text-2xl font-bold text-red-600">Tutoriels</a>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="{{ path('app_home') }}" class="text-gray-600 hover:text-red-600">Accueil</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-red-600">Catégories</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-red-600">À propos</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-red-600">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Section -->
+        <main class="container mx-auto px-6 py-16">
+            <h1 class="text-4xl font-bold text-gray-800 text-center">{{ tutorial.title }}</h1>
+            <p class="mt-4 text-gray-600 text-center text-lg">{{ tutorial.description }}</p>
+            <div class="mt-8 bg-white p-6 rounded-lg shadow">
+                <div class="prose-custom">
+                    {{ contentHtml | raw }}
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white">
+            <div class="container mx-auto px-6 py-8 text-center">
+                <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>
+                <p class="text-sm mt-2">Fait avec ❤️ pour les apprenants du monde entier.</p>
+            </div>
+        </footer>
+    </body>
+</html>
