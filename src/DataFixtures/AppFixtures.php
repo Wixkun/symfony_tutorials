@@ -22,26 +22,32 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Users
+       // Users
         $admin = new User();
-        $admin->setEmail('admin@example.com');
-        $admin->setUsername('admin');
-        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'Admin123'));
+        $admin->setEmail('aminairi@example.com');
+        $admin->setUsername('vive_esgi');
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'ViveJWT123'));
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setName('Nairi');
+        $admin->setFirstName('Amin');
         $manager->persist($admin);
 
         $user1 = new User();
-        $user1->setEmail('user1@example.com');
-        $user1->setUsername('user1');
-        $user1->setPassword($this->passwordHasher->hashPassword($user1, 'Password1'));
+        $user1->setEmail('amontoya@example.com');
+        $user1->setUsername('amontoya');
+        $user1->setPassword($this->passwordHasher->hashPassword($user1, 'GemLeDinosaure98'));
         $user1->setRoles(['ROLE_USER']);
+        $user1->setName('Goat');
+        $user1->setFirstName('Alexis');
         $manager->persist($user1);
 
         $user2 = new User();
-        $user2->setEmail('user2@example.com');
-        $user2->setUsername('user2');
-        $user2->setPassword($this->passwordHasher->hashPassword($user2, 'Password2'));
-        $user2->setRoles(['ROLE_USER']);
+        $user2->setEmail('vasseurbaptiste@example.com');
+        $user2->setUsername('symfony_goat');
+        $user2->setPassword($this->passwordHasher->hashPassword($user2, 'FuckLaravel666'));
+        $user2->setRoles(['ROLE_BANNED']);
+        $user2->setName('Vasseur');
+        $user2->setFirstName('Baptiste');
         $manager->persist($user2);
 
         // Subjects
