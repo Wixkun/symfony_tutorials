@@ -1,0 +1,12 @@
+App\Entity\Comment:
+    comment_1:
+        content: "This tutorial is very helpful!"
+        creationDate: <dateTimeBetween('-1 years', 'now')>
+        tutorial: '@tutorial_1'
+        user: '@user_1' 
+
+    comment_2:
+        content: "I struggled with algebra, but this made it easy."
+        creationDate: <dateTimeBetween('-1 years', 'now')>
+        tutorial: '@tutorial_2'
+        user: '@user_2' 
