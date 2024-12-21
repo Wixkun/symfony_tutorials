@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')] 
-class User
+#[ORM\Table(name: '`user`')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,11 +25,10 @@ class User
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $password = null;
 
+    private ?string $plainPassword = null;
+
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-
-    #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    private bool $passwordHashed = false;
 
     public function getId(): ?int
     {
@@ -70,6 +71,16 @@ class User
         return $this;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
     public function getRoles(): array
     {
         return $this->roles;
@@ -82,15 +93,13 @@ class User
         return $this;
     }
 
-    public function isPasswordHashed(): bool
+    public function eraseCredentials(): void
     {
-        return $this->passwordHashed;
+        $this->plainPassword = null;
     }
 
-    public function setPasswordHashed(bool $passwordHashed): self
+    public function getUserIdentifier(): string
     {
-        $this->passwordHashed = $passwordHashed;
-
-        return $this;
+        return $this->email; 
     }
 }

@@ -1,0 +1,5 @@
+doctrine:
+    dbal:
+        logging: true
+    orm:
+        debug: true

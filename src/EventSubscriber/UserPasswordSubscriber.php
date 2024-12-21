@@ -36,17 +36,21 @@ class UserPasswordSubscriber implements EventSubscriber
     }
 
     private function hashPassword(LifecycleEventArgs $args): void
-    {
-        $entity = $args->getObject();
+{
+    $entity = $args->getObject();
 
-        if (!$entity instanceof User) {
-            return;
-        }
-        
-        if ($entity->getPassword() && !$entity->isPasswordHashed()) {
-            $hashedPassword = $this->passwordHasher->hashPassword($entity, $entity->getPassword());
-            $entity->setPassword($hashedPassword);
-            $entity->setPasswordHashed(true); 
-        }
+    if (!$entity instanceof User) {
+        return;
     }
+
+    $plainPassword = $entity->getPlainPassword();
+    if ($plainPassword) {
+        file_put_contents('var/log/password_subscriber.log', "Hashing password for user: " . $entity->getEmail() . "\n", FILE_APPEND);
+        $hashedPassword = $this->passwordHasher->hashPassword($entity, $plainPassword);
+        $entity->setPassword($hashedPassword);
+        $entity->eraseCredentials();
+    }
+}
+
+
 }
