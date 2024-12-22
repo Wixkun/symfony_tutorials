@@ -7,15 +7,15 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-        <!-- Section principale -->
+        
         <section class="container mx-auto px-6 py-16">
-            <!-- Titre -->
+            
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-extrabold text-gray-800">Modifier le Tutoriel</h1>
                 <p class="text-gray-600 mt-2">Mettez à jour les informations du tutoriel ci-dessous.</p>
             </div>
 
-            <!-- Formulaire -->
+            
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
                 {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
                     <div>
@@ -50,7 +50,7 @@
                 {{ form_end(form) }}
             </div>
 
-            <!-- Boutons secondaires -->
+            
             <div class="flex justify-between mt-8 max-w-2xl mx-auto">
                 <a href="{{ path('app_admin_tutorial_index') }}" class="text-gray-700 hover:text-red-600 underline">
                     ← Retour à la liste
@@ -64,7 +64,7 @@
             </div>
         </section>
 
-        <!-- Footer -->
+        
         <footer class="bg-gray-800 text-white py-6">
             <div class="container mx-auto text-center">
                 <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>

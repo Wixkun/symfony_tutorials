@@ -12,14 +12,14 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 <div class="min-h-screen flex items-center justify-center">
     <main class="w-full max-w-md mx-auto p-6">
-        <!-- Header -->
+        
         <header class="text-center mb-6">
             <a href="/" class="text-2xl font-bold text-red-600">
                 Réinitialisation du mot de passe
             </a>
         </header>
 
-        <!-- Flash Messages -->
+        
         <section class="mb-4">
             {% for type, messages in app.flashes %}
                 {% for message in messages %}
@@ -30,7 +30,7 @@
             {% endfor %}
         </section>
 
-        <!-- Reset Password Form -->
+        
         <div class="bg-white p-8 rounded-lg shadow">
             <h1 class="text-xl font-bold text-gray-800 text-center mb-6">Réinitialisez votre mot de passe</h1>
             <p class="text-center text-sm text-gray-600 mb-6">
@@ -40,7 +40,7 @@
                 Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.
             </div>
             <form method="POST" action="{{ path('page_reset_password', { 'token': token }) }}" class="space-y-4">
-                <!-- Password Field -->
+                
                 <div>
                     <input 
                         name="password" 
@@ -50,7 +50,7 @@
                         placeholder="Nouveau mot de passe" 
                         required />
                 </div>
-                <!-- Confirm Password Field -->
+                
                 <div>
                     <input 
                         name="repeat_password" 
@@ -60,7 +60,7 @@
                         placeholder="Confirmez votre nouveau mot de passe" 
                         required />
                 </div>
-                <!-- Submit Button -->
+                
                 <div class="mt-6">
                     <button 
                         type="submit" 
@@ -69,7 +69,7 @@
                     </button>
                 </div>
             </form>
-            <!-- Back to Login -->
+            
             <div class="mt-6 text-center">
                 <a href="{{ path('app_login') }}" 
                    class="text-red-600 hover:text-red-700 transition">

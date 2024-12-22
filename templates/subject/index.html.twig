@@ -16,7 +16,7 @@
         {% endblock %}
     </head>
     <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <!-- Header -->
+    
     <header class="bg-white shadow">
         <div class="container mx-auto flex justify-between items-center py-4 px-6">
             <a href="/" class="text-2xl font-bold text-red-600">Tutorials</a>
@@ -29,7 +29,7 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    
     <section class="bg-gray-800 text-white">
         <div class="container mx-auto px-6 py-16 text-center">
             <h1 class="text-4xl font-bold">Découvrez les Matières et leurs Tutoriels</h1>
@@ -37,9 +37,9 @@
         </div>
     </section>
 
-    <!-- Main Section -->
+    
     <main class="container mx-auto px-6 py-16 flex flex-col lg:flex-row gap-8">
-        <!-- Table des Matières -->
+        
         <aside class="bg-white rounded-lg shadow p-6 w-full lg:w-1/4">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Matières</h2>
             <ul class="space-y-4">
@@ -55,7 +55,7 @@
             </ul>
         </aside>
 
-        <!-- Liste des Tutoriels -->
+        
         <section class="w-full lg:w-3/4">
             <h2 class="text-3xl font-bold text-gray-800 mb-8">Liste des Tutoriels</h2>
             {% for subject in subjects %}
@@ -81,7 +81,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-800 text-white">
         <div class="container mx-auto px-6 py-8 text-center">
             <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>
