@@ -213,7 +213,7 @@ class AppFixtures extends Fixture
         $manager->persist($comment1);
 
         $comment2 = new Comment();
-        $comment2->setContent('J\'ai eu des difficultés avec l\'algèbre, mais ce tutoriel m\'a simplifié les choses.');
+        $comment2->setContent('J\'ai eu des difficultés avec Python, mais ce tutoriel m\'a simplifié les choses.');
         $comment2->setCreationDate(new \DateTime('-1 year'));
         $comment2->setTutorial($tutorial2);
         $comment2->setUser($user2);
