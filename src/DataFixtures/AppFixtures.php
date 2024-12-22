@@ -52,18 +52,18 @@ class AppFixtures extends Fixture
 
         // Subjects
         $subject1 = new Subject();
-        $subject1->setName('Mathematics');
-        $subject1->setDescription('All about numbers and calculations.');
+        $subject1->setName('Mathématiques');
+        $subject1->setDescription('Des chiffres et des lettres(on sait pas pourquoi y\'en a...)');
         $manager->persist($subject1);
 
         $subject2 = new Subject();
-        $subject2->setName('Programming');
-        $subject2->setDescription('Learn programming languages and techniques.');
+        $subject2->setName('Programmation');
+        $subject2->setDescription('Apprenez les languages et techniques de programmation.');
         $manager->persist($subject2);
 
         $subject3 = new Subject();
-        $subject3->setName('Physics');
-        $subject3->setDescription('Explore the laws of the universe.');
+        $subject3->setName('Physique');
+        $subject3->setDescription('Explorez les lois de l\'univers.');
         $manager->persist($subject3);
 
         // Tutorials

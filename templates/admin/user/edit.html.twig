@@ -17,7 +17,40 @@
 
             <!-- Formulaire -->
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-                {{ include('admin/user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                <!-- Affichage des messages Flash -->
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">{{ message }}</div>
+                    {% endfor %}
+                {% endfor %}
+
+                <!-- Formulaire Symfony -->
+               {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+                    <div>
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.name, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.firstName, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
+                        {{ form_widget(form.firstName) }}
+                        {{ form_errors(form.firstName) }}
+                    </div>
+                    <div>
+                        {{ form_label(form.roles, null, {'label_attr': {'class': 'block text-gray-700 font-medium mb-2'}}) }}
+                        {{ form_widget(form.roles) }}
+                        {{ form_errors(form.roles) }}
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-400 transition">Mettre à jour</button>
+                    </div>
+                {{ form_end(form) }}
+
             </div>
 
             <!-- Boutons secondaires -->

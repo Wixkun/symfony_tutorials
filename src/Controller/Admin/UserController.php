@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/user')]
 final class UserController extends AbstractController
@@ -33,12 +33,14 @@ final class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Nouvel utilisateur ajouté avec succès.');
+
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/user/new.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -57,23 +59,31 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles([$form->get('roles')->getData()]);
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Utilisateur mis à jour avec succès.');
+            return $this->redirectToRoute('app_admin_user_index');
         }
 
         return $this->render('admin/user/edit.html.twig', [
+            'form' => $form->createView(),
             'user' => $user,
-            'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Utilisateur supprimé avec succès.');
+        } else {
+            $this->addFlash('error', 'Le token CSRF est invalide.');
         }
 
         return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
