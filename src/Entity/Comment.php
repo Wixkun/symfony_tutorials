@@ -24,9 +24,10 @@ class Comment
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $user = null;    
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Tutorial $tutorial = null;  
+    #[ORM\ManyToOne(targetEntity: Tutorial::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Tutorial $tutorial = null;
+    
 
     public function getId(): ?int
     {

@@ -55,18 +55,21 @@ final class SubjectController extends AbstractController
     {
         $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_admin_subject_index', [], Response::HTTP_SEE_OTHER);
+    
+            $this->addFlash('success', 'Matière mise à jour avec succès.');
+    
+            return $this->redirectToRoute('app_admin_subject_index');
         }
-
+    
         return $this->render('admin/subject/edit.html.twig', [
             'subject' => $subject,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_admin_subject_delete', methods: ['POST'])]
     public function delete(Request $request, Subject $subject, EntityManagerInterface $entityManager): Response

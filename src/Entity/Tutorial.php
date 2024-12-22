@@ -25,9 +25,10 @@ class Tutorial
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tutorials')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Subject::class, inversedBy: 'tutorials')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Subject $subject = null;
+    
 
     /**
      * @var Collection<int, Chapter>
