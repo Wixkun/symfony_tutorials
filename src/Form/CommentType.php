@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Comment;
-use App\Entity\Tutorial;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,19 +13,13 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
-            ->add('creationDate', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
-            ->add('tutorial', EntityType::class, [
-                'class' => Tutorial::class,
-                'choice_label' => 'id',
-            ])
-        ;
+            ->add('content', TextareaType::class, [
+                'label' => 'Votre commentaire',
+                'attr' => [
+                    'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200',
+                    'placeholder' => 'Écrivez votre commentaire ici...',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
