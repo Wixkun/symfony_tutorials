@@ -26,6 +26,7 @@ class TutorialController extends AbstractController
 
         $chapters = $entityManager->getRepository(Chapter::class)->findBy(['tutorial' => $tutorial]);
         $subject = $tutorial->getSubject();
+        $comments = $tutorial->getComments(); // Récupère les commentaires liés au tutoriel
 
         $converter = new CommonMarkConverter();
         $contentHtml = $converter->convertToHtml($tutorial->getContent());
@@ -34,6 +35,7 @@ class TutorialController extends AbstractController
             'tutorial' => $tutorial,
             'chapters' => $chapters,
             'subject' => $subject,
+            'comments' => $comments,
             'contentHtml' => $contentHtml, 
         ]);
     }

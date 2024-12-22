@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <header class="bg-white shadow">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <a href="/" class="text-2xl font-bold text-red-600">Admin Dashboard</a>
+            <div class="flex items-center space-x-4">
+                <a href="{{ path('app_home') }}" class="text-gray-600 hover:text-red-600">Retour au site</a>
+                <a href="{{ path('app_logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
+                    Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <h1 class="text-4xl font-bold text-gray-800 text-center mb-12">Bienvenue sur le tableau de bord admin</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Example Admin Action -->
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Gérer les utilisateurs</h2>
+                <p class="text-gray-600 mt-2">Voir, modifier ou supprimer les utilisateurs.</p>
+                <a href="{{ path('app_admin_user_index') }}" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+                    Gérer
+                </a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Gérer les tutoriels</h2>
+                <p class="text-gray-600 mt-2">Ajouter, modifier ou supprimer des tutoriels.</p>
+                <a href="{{ path('app_admin_tutorial_index') }}" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+                    Gérer
+                </a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Voir les matières</h2>
+                <p class="text-gray-600 mt-2">Ajouter, modifier ou supprimer des matières.</p>
+                <a href="{{ path('app_admin_subject_index') }}" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+                    Voir
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-sm">© {{ "now"|date("Y") }} Admin Dashboard. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

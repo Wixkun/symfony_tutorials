@@ -30,14 +30,17 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800           
                 path: /
-                # always_remember_me: true  
 
     role_hierarchy:
         ROLE_BANNED: []                  
         ROLE_USER: [ROLE_BANNED]         
-        ROLE_ADMIN: [ROLE_USER, ROLE_BANNED] 
+        ROLE_ADMIN: [ROLE_USER] 
 
     access_control:
-        - { path: ^/banned, roles: ROLE_BANNED } 
-        - { path: ^/profile, roles: ROLE_USER }  
-        - { path: ^/admin, roles: ROLE_ADMIN }    
+        - { path: ^/banned, roles: ROLE_BANNED }
+
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY, allow_if: "not is_granted('ROLE_BANNED')" }
+
+        - { path: ^/profile, roles: ROLE_USER }
+
+        - { path: ^/admin, roles: ROLE_ADMIN }

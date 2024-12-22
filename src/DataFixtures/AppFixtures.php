@@ -68,150 +68,152 @@ class AppFixtures extends Fixture
 
         // Tutorials
         $tutorial1 = new Tutorial();
-        $tutorial1->setTitle('Introduction to Algebra');
-        $tutorial1->setDescription("A beginner's guide to algebra.");
+        $tutorial1->setTitle('Introduction à l\'algèbre');
+        $tutorial1->setDescription("Un guide pour débuter en algèbre.");
         $tutorial1->setCreationDate(new \DateTime('-1 year'));
         $tutorial1->setSubject($subject1);
         $tutorial1->setContent('
-        ## Introduction to Algebra
-        Welcome to this tutorial on Algebra! In this guide, we will explore the fundamentals of algebra, including:
-        - Understanding variables and their role.
-        - Solving simple equations step by step.
-        - Mastering the basic operations (addition, subtraction, multiplication, division).
+        ## Introduction à l\'algèbre
+        Bienvenue dans ce tutoriel sur l\'algèbre ! Dans ce guide, nous allons explorer les bases de l\'algèbre, notamment :
+        - Comprendre les variables et leur rôle.
+        - Résoudre des équations simples étape par étape.
+        - Maîtriser les opérations de base (addition, soustraction, multiplication, division).
 
-        ### Why Learn Algebra?
-        Algebra is a core mathematical tool that helps solve complex problems in a logical way. 
-        By mastering the basics in this tutorial, you\'ll build a strong foundation for advanced math and real-world applications.
+        ### Pourquoi apprendre l\'algèbre ?
+        L\'algèbre est un outil mathématique fondamental qui permet de résoudre des problèmes complexes de manière logique.
+        En maîtrisant les bases, vous poserez une base solide pour les mathématiques avancées et leurs applications dans la vie réelle.
 
-        ### Real-Life Application
-        Algebra is used in many fields such as finance, engineering, and computer science to solve problems and optimize results.
+        ### Application pratique
+        L\'algèbre est utilisée dans de nombreux domaines tels que la finance, l\'ingénierie et l\'informatique pour résoudre des problèmes et optimiser les résultats.
         ');
         $manager->persist($tutorial1);
 
         $tutorial2 = new Tutorial();
-        $tutorial2->setTitle('Learn Python Basics');
-        $tutorial2->setDescription('A crash course in Python programming.');
+        $tutorial2->setTitle('Apprendre les bases de Python');
+        $tutorial2->setDescription('Un cours intensif sur la programmation en Python.');
         $tutorial2->setCreationDate(new \DateTime('-1 year'));
         $tutorial2->setSubject($subject2);
         $tutorial2->setContent('
-        ## Learn Python Basics
-        Python is a powerful and beginner-friendly programming language. In this tutorial, you will learn:
-        - The fundamentals of Python syntax.
-        - How to work with basic data types like integers, strings, and lists.
-        - Writing and using simple functions.
+        ## Apprendre les bases de Python
+        Python est un langage de programmation puissant et convivial pour les débutants. Dans ce tutoriel, vous apprendrez :
+        - Les bases de la syntaxe Python.
+        - Comment travailler avec des types de données simples comme les entiers, les chaînes de caractères et les listes.
+        - Écrire et utiliser des fonctions simples.
 
-        ### Why Learn Python?
-        Python is versatile and widely used in industries such as web development, data analysis, artificial intelligence, and automation. It\'s beginner-friendly yet powerful enough for advanced use cases.
+        ### Pourquoi apprendre Python ?
+        Python est polyvalent et largement utilisé dans des secteurs tels que le développement web, l\'analyse de données, l\'intelligence artificielle et l\'automatisation. Il est à la fois accessible pour les débutants et suffisamment puissant pour des cas d\'utilisation avancés.
 
-        ### Getting Started with Python
-        Python is known for its clean and easy-to-read syntax. Here\'s how you can start:
-
-        ````python
-        def greet(name):
-            return "Hello, " + name
-
-        name = "Alice"
-        print(greet(name))
-        ````
-
-        This simple function takes a name as input and returns a greeting.
-
-        ### Data Types in Python
-        Python supports various data types such as:
-        - Strings: "Hello, World"
-        - Integers: 42
-        - Lists: [1, 2, 3, 4]
-
-        Example of working with a list:
+        ### Premiers pas avec Python
+        Python est réputé pour sa syntaxe claire et facile à lire. Voici un exemple de démarrage :
 
         ```python
-        my_list = [1, 2, 3]
-        my_list.append(4)
-        print(my_list)
+        def saluer(nom):
+            return "Bonjour, " + nom
+
+        nom = "Alice"
+        print(saluer(nom))
         ```
 
-        This will output: [1, 2, 3, 4]
+        Cette fonction simple prend un nom en entrée et retourne une salutation.
 
-        ### Functions and Logic
-        Functions in Python allow you to organize your code into reusable blocks. Here\'s an example:
+        ### Types de données en Python
+        Python prend en charge divers types de données, notamment :
+        - Chaînes : "Bonjour, le monde"
+        - Entiers : 42
+        - Listes : [1, 2, 3, 4]
+
+        Exemple d\'utilisation d\'une liste :
 
         ```python
-        def add_numbers(a, b):
+        ma_liste = [1, 2, 3]
+        ma_liste.append(4)
+        print(ma_liste)
+        ```
+
+        Cela affichera : [1, 2, 3, 4]
+
+        ### Fonctions et logique
+        Les fonctions en Python permettent d\'organiser votre code en blocs réutilisables. Voici un exemple :
+
+        ```python
+        def additionner(a, b):
             return a + b
 
-        result = add_numbers(5, 7)
-        print("The result is:", result)
+        résultat = additionner(5, 7)
+        print("Le résultat est :", résultat)
         ```
 
-        This will output: The result is: 12
+        Cela affichera : Le résultat est : 12
 
-        ### Real-Life Applications of Python
-        Python is widely used in:
-        - Automating repetitive tasks.
-        - Building websites and applications.
-        - Analyzing large datasets.
-        - Creating machine learning models.
+        ### Applications pratiques de Python
+        Python est largement utilisé pour :
+        - Automatiser des tâches répétitives.
+        - Créer des sites web et des applications.
+        - Analyser de grandes quantités de données.
+        - Développer des modèles d\'apprentissage automatique.
 
-        By the end of this tutorial, you\'ll have the foundational knowledge to begin exploring Python programming and applying it to solve real-world problems.
+        À la fin de ce tutoriel, vous aurez les bases nécessaires pour explorer la programmation en Python et l\'appliquer à des problèmes réels.
         ');
         $manager->persist($tutorial2);
 
         $tutorial3 = new Tutorial();
-        $tutorial3->setTitle("Newton's Laws of Motion");
-        $tutorial3->setDescription("Understanding Newton's laws with examples.");
+        $tutorial3->setTitle('Les lois du mouvement de Newton');
+        $tutorial3->setDescription('Comprendre les lois de Newton avec des exemples.');
         $tutorial3->setCreationDate(new \DateTime('-1 year'));
         $tutorial3->setSubject($subject3);
         $tutorial3->setContent('
-        ## Newton\'s Laws of Motion
-        Isaac Newton\'s three laws of motion form the foundation of classical mechanics. Let\'s explore them:
+        ## Les lois du mouvement de Newton
+        Les trois lois du mouvement d\'Isaac Newton constituent la base de la mécanique classique. Explorons-les :
 
-        ### First Law: The Law of Inertia
-        An object will remain at rest or in uniform motion unless acted upon by an external force.
+        ### Première loi : La loi de l\'inertie
+        Un objet reste au repos ou en mouvement uniforme à moins qu\'une force extérieure n\'agisse sur lui.
 
-        ### Second Law: F = ma
-        Force equals mass times acceleration. This means that the force applied to an object is directly proportional to its mass and acceleration.
+        ### Deuxième loi : F = ma
+        La force est égale à la masse multipliée par l\'accélération. Cela signifie que la force appliquée à un objet est directement proportionnelle à sa masse et à son accélération.
 
-        ### Third Law: Action and Reaction
-        For every action, there is an equal and opposite reaction.
+        ### Troisième loi : Action et réaction
+        Pour chaque action, il y a une réaction égale et opposée.
 
-        ### Real-Life Application
-        Newton\'s laws are fundamental in designing vehicles, understanding sports physics, and even planning space missions.
+        ### Application pratique
+        Les lois de Newton sont fondamentales pour concevoir des véhicules, comprendre la physique des sports et même planifier des missions spatiales.
         ');
         $manager->persist($tutorial3);
 
 
+
         // Chapters
         $chapter1 = new Chapter();
-        $chapter1->setTitle('What is Algebra?');
-        $chapter1->setContent('An introduction to algebra, its uses, and its history.');
+        $chapter1->setTitle('Qu\'est-ce que l\'algèbre ?');
+        $chapter1->setContent('Une introduction à l\'algèbre, ses usages et son histoire.');
         $chapter1->setPosition(1);
         $chapter1->setTutorial($tutorial1);
         $manager->persist($chapter1);
 
         $chapter2 = new Chapter();
-        $chapter2->setTitle('Basic Algebraic Operations');
-        $chapter2->setContent('Learn the fundamental operations in algebra.');
+        $chapter2->setTitle('Opérations algébriques de base');
+        $chapter2->setContent('Apprenez les opérations fondamentales en algèbre.');
         $chapter2->setPosition(2);
         $chapter2->setTutorial($tutorial1);
         $manager->persist($chapter2);
 
         $chapter3 = new Chapter();
-        $chapter3->setTitle('Setting Up Python');
-        $chapter3->setContent('How to install and configure Python on your system.');
+        $chapter3->setTitle('Configurer Python');
+        $chapter3->setContent('Comment installer et configurer Python sur votre système.');
         $chapter3->setPosition(1);
         $chapter3->setTutorial($tutorial2);
         $manager->persist($chapter3);
 
-        // Comments
+
+        // Commentaires
         $comment1 = new Comment();
-        $comment1->setContent('This tutorial is very helpful!');
+        $comment1->setContent('Ce tutoriel est très utile !');
         $comment1->setCreationDate(new \DateTime('-1 year'));
         $comment1->setTutorial($tutorial1);
         $comment1->setUser($user1);
         $manager->persist($comment1);
 
         $comment2 = new Comment();
-        $comment2->setContent('I struggled with algebra, but this made it easy.');
+        $comment2->setContent('J\'ai eu des difficultés avec l\'algèbre, mais ce tutoriel m\'a simplifié les choses.');
         $comment2->setCreationDate(new \DateTime('-1 year'));
         $comment2->setTutorial($tutorial2);
         $comment2->setUser($user2);
