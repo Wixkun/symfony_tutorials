@@ -1,13 +1,45 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Modifier un Utilisateur{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+        <!-- Section principale -->
+        <section class="container mx-auto px-6 py-16">
+            <!-- Titre -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-extrabold text-gray-800">Modifier l'Utilisateur</h1>
+                <p class="text-gray-600 mt-2">Mettez à jour les informations de l'utilisateur ci-dessous.</p>
+            </div>
 
-{% block title %}Edit User{% endblock %}
+            <!-- Formulaire -->
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+                {{ include('admin/user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
 
-{% block body %}
-    <h1>Edit User</h1>
+            <!-- Boutons secondaires -->
+            <div class="flex justify-between mt-8 max-w-2xl mx-auto">
+                <a href="{{ path('app_admin_user_index') }}" class="text-gray-700 hover:text-red-600 underline">
+                    ← Retour à la liste
+                </a>
+                <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </section>
 
-    {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_admin_user_index') }}">back to list</a>
-
-    {{ include('admin/user/_delete_form.html.twig') }}
-{% endblock %}
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6">
+            <div class="container mx-auto text-center">
+                <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>
+                <p class="text-sm mt-2">Fait avec ❤️ pour les apprenants du monde entier.</p>
+            </div>
+        </footer>
+    </body>
+</html>

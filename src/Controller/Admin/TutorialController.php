@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
+use App\Repository\SubjectRepository; // Import pour les sujets
 use App\Repository\TutorialRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,7 @@ final class TutorialController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_tutorial_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SubjectRepository $subjectRepository): Response
     {
         $tutorial = new Tutorial();
         $form = $this->createForm(TutorialType::class, $tutorial);
@@ -38,7 +39,8 @@ final class TutorialController extends AbstractController
 
         return $this->render('admin/tutorial/new.html.twig', [
             'tutorial' => $tutorial,
-            'form' => $form,
+            'form' => $form->createView(),
+            'subjects' => $subjectRepository->findAll(), // Pass subjects to the view
         ]);
     }
 
@@ -51,7 +53,7 @@ final class TutorialController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_tutorial_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager, SubjectRepository $subjectRepository): Response
     {
         $form = $this->createForm(TutorialType::class, $tutorial);
         $form->handleRequest($request);
@@ -64,14 +66,15 @@ final class TutorialController extends AbstractController
 
         return $this->render('admin/tutorial/edit.html.twig', [
             'tutorial' => $tutorial,
-            'form' => $form,
+            'form' => $form->createView(),
+            'subjects' => $subjectRepository->findAll(), // Pass subjects to the view
         ]);
     }
 
     #[Route('/{id}', name: 'app_admin_tutorial_delete', methods: ['POST'])]
     public function delete(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tutorial->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $tutorial->getId(), $request->request->get('_token'))) {
             $entityManager->remove($tutorial);
             $entityManager->flush();
         }

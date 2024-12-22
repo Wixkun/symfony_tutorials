@@ -1,20 +1,92 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Tutoriels - Matières{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        {% block stylesheets %}
+        <style>
+            @layer utilities {
+                .main-color {
+                    @apply text-red-600;
+                }
+            }
+        </style>
+        {% endblock %}
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <!-- Header -->
+    <header class="bg-white shadow">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <a href="/" class="text-2xl font-bold text-red-600">Tutoriels</a>
+            <nav class="flex-1 flex justify-center">
+                <ul class="flex space-x-6">
+                    <li><a href="{{ path('app_home') }}" class="text-gray-600 hover:text-red-600">Accueil</a></li>
+                    <li><a href="{{ path('app_subject') }}" class="text-gray-600 hover:text-red-600">Matières</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-{% block title %}Hello SubjectController!{% endblock %}
+    <!-- Hero Section -->
+    <section class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-16 text-center">
+            <h1 class="text-4xl font-bold">Découvrez les Matières et leurs Tutoriels</h1>
+            <p class="mt-4 text-lg">Explorez nos contenus éducatifs organisés par matières.</p>
+        </div>
+    </section>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <!-- Main Section -->
+    <main class="container mx-auto px-6 py-16 flex flex-col lg:flex-row gap-8">
+        <!-- Table des Matières -->
+        <aside class="bg-white rounded-lg shadow p-6 w-full lg:w-1/4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Matières</h2>
+            <ul class="space-y-4">
+                {% for subject in subjects %}
+                    <li>
+                        <a href="#subject-{{ subject.id }}" class="text-gray-600 hover:text-red-600 block">
+                            {{ subject.name }}
+                        </a>
+                    </li>
+                {% else %}
+                    <p class="text-gray-500">Aucune matière disponible.</p>
+                {% endfor %}
+            </ul>
+        </aside>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <!-- Liste des Tutoriels -->
+        <section class="w-full lg:w-3/4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Liste des Tutoriels</h2>
+            {% for subject in subjects %}
+                <div id="subject-{{ subject.id }}" class="bg-white rounded-lg shadow p-6 mb-8">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">{{ subject.name }}</h3>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/dev_esgi/symfony/tp/tp_201224/src/Controller/SubjectController.php</code></li>
-        <li>Your template at <code>C:/dev_esgi/symfony/tp/tp_201224/templates/subject/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+                    <h4 class="text-lg font-medium text-gray-600">Tutoriels :</h4>
+                    <ul class="space-y-4 mt-4">
+                        {% for tutorial in subject.tutorials %}
+                            <li class="border-b border-gray-200 pb-2">
+                                <a href="{{ path('tutorial_show', { 'id': tutorial.id }) }}" class="text-red-600 hover:underline">
+                                    {{ tutorial.title }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="text-gray-500">Aucun tutoriel disponible pour cette matière.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p class="text-gray-500 text-center col-span-3">Aucune matière disponible.</p>
+            {% endfor %}
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>
+            <p class="text-sm mt-2">Fait avec ❤️ pour les apprenants du monde entier.</p>
+        </div>
+    </footer>
+</body>
+</html>

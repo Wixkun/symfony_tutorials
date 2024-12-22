@@ -1,41 +1,50 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Tutorial index{% endblock %}
-
-{% block body %}
-    <h1>Tutorial index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>CreationDate</th>
-                <th>Content</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tutorial in tutorials %}
-            <tr>
-                <td>{{ tutorial.id }}</td>
-                <td>{{ tutorial.title }}</td>
-                <td>{{ tutorial.description }}</td>
-                <td>{{ tutorial.creationDate ? tutorial.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tutorial.content }}</td>
-                <td>
-                    <a href="{{ path('app_admin_tutorial_show', {'id': tutorial.id}) }}">show</a>
-                    <a href="{{ path('app_admin_tutorial_edit', {'id': tutorial.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_admin_tutorial_new') }}">Create new</a>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Liste des Tutoriels{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+        <section class="container mx-auto px-6 py-16">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Liste des Tutoriels</h1>
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <table class="table-auto min-w-full text-left text-gray-700">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="px-6 py-3">Id</th>
+                            <th class="px-6 py-3">Titre</th>
+                            <th class="px-6 py-3">Description</th>
+                            <th class="px-6 py-3">Date de Création</th>
+                            <th class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tutorial in tutorials %}
+                            <tr class="border-b">
+                                <td class="px-6 py-3">{{ tutorial.id }}</td>
+                                <td class="px-6 py-3">{{ tutorial.title }}</td>
+                                <td class="px-6 py-3">{{ tutorial.description }}</td>
+                                <td class="px-6 py-3">{{ tutorial.creationDate ? tutorial.creationDate|date('d/m/Y') : '' }}</td>
+                                <td class="px-6 py-3">
+                                    <a href="{{ path('app_admin_tutorial_show', {'id': tutorial.id}) }}" class="text-blue-600 hover:underline">Voir</a>
+                                    <a href="{{ path('app_admin_tutorial_edit', {'id': tutorial.id}) }}" class="text-yellow-600 hover:underline ml-4">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-gray-500 py-6">Aucun tutoriel trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-6">
+                <a href="{{ path('app_admin_tutorial_new') }}" class="bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-500 transition">
+                    Ajouter un nouveau tutoriel
+                </a>
+            </div>
+        </section>
+    </body>
+</html>

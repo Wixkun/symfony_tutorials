@@ -7,7 +7,6 @@
         <script src="https://cdn.tailwindcss.com"></script>
         {% block stylesheets %}
         <style>
-            /* Custom Tailwind configuration */
             @layer utilities {
                 .main-color {
                     @apply text-red-600;
@@ -17,21 +16,19 @@
         {% endblock %}
     </head>
     <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-        <!-- Header -->
         <header class="bg-white shadow">
             <div class="container mx-auto flex justify-between items-center py-4 px-6">
                 <a href="/" class="text-2xl font-bold text-red-600">Tutoriels</a>
-                <nav>
+
+                <nav class="flex-1 flex justify-center">
                     <ul class="flex space-x-6">
-                        <li><a href="#" class="text-gray-600 hover:text-red-600">Accueil</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-red-600">Catégories</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-red-600">À propos</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-red-600">Contact</a></li>
+                        <li><a href="{{ path('app_home') }}" class="text-gray-600 hover:text-red-600">Accueil</a></li>
+                        <li><a href="{{ path('app_subject') }}" class="text-gray-600 hover:text-red-600">Matières</a></li>
                     </ul>
                 </nav>
+
                 <div class="flex items-center space-x-4">
                     {% if app.user %}
-                        <!-- Contenu dynamique basé sur les rôles -->
                         {% if 'ROLE_ADMIN' in app.user.roles %}
                             <a href="{{ path('admin_dashboard') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
                                 Accéder à l'admin
@@ -43,12 +40,10 @@
                         {% elseif 'ROLE_BANNED' in app.user.roles %}
                             <span class="text-red-600">Votre compte est banni.</span>
                         {% endif %}
-                        <!-- Déconnexion -->
                         <a href="{{ path('app_logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
                             Déconnexion
                         </a>
                     {% else %}
-                        <!-- Connexion -->
                         <a href="{{ path('app_login') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
                             Connexion
                         </a>
@@ -57,7 +52,6 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
         <section class="bg-gray-800 text-white">
             <div class="container mx-auto px-6 py-16 text-center">
                 <h1 class="text-4xl font-bold">Apprenez de nouveaux savoir-faire en un clic</h1>
@@ -68,11 +62,9 @@
             </div>
         </section>
 
-        <!-- Tutorials Section -->
         <section class="container mx-auto px-6 py-16">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Tutoriels populaires</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Tutorial Card -->
                 {% for tutorial in tutorials %}
                     <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6">
                         <h3 class="text-xl font-bold text-gray-800">{{ tutorial.title }}</h3>
@@ -83,7 +75,6 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="bg-gray-800 text-white">
             <div class="container mx-auto px-6 py-8 text-center">
                 <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>

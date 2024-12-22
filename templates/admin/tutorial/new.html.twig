@@ -1,11 +1,83 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Créer un Nouveau Tutoriel{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        {% block stylesheets %}
+        <style>
+            @layer utilities {
+                .main-color {
+                    @apply text-red-600;
+                }
+            }
+        </style>
+        {% endblock %}
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+        <!-- Section principale -->
+        <section class="container mx-auto px-6 py-16">
+            <!-- Titre -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-extrabold text-gray-800">Créer un Nouveau Tutoriel</h1>
+                <p class="text-gray-600 mt-2">Ajoutez un nouveau tutoriel au système.</p>
+            </div>
 
-{% block title %}New Tutorial{% endblock %}
+            <!-- Formulaire -->
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+                <form method="post" class="space-y-6">
+                    <!-- Titre -->
+                    <div>
+                        <label for="title" class="block text-gray-700 font-medium mb-2">Titre du Tutoriel</label>
+                        <input type="text" id="title" name="title" placeholder="Entrez le titre du tutoriel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200">
+                    </div>
 
-{% block body %}
-    <h1>Create new Tutorial</h1>
+                    <!-- Description -->
+                    <div>
+                        <label for="description" class="block text-gray-700 font-medium mb-2">Description</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Entrez une description" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200"></textarea>
+                    </div>
 
-    {{ include('admin/tutorial/_form.html.twig') }}
+                    <!-- Sujet -->
+                    <div>
+                        <label for="subject" class="block text-gray-700 font-medium mb-2">Matière</label>
+                        <select id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200">
+                            {% for subject in subjects %}
+                                <option value="{{ subject.id }}">{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-    <a href="{{ path('app_admin_tutorial_index') }}">back to list</a>
-{% endblock %}
+                    <!-- Contenu -->
+                    <div>
+                        <label for="content" class="block text-gray-700 font-medium mb-2">Contenu</label>
+                        <textarea id="content" name="content" rows="6" placeholder="Ajoutez le contenu du tutoriel ici..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200"></textarea>
+                    </div>
+
+                    <!-- Bouton Créer -->
+                    <div>
+                        <button type="submit" class="w-full bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-400 transition">
+                            Créer
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lien de retour -->
+            <div class="mt-6 text-center">
+                <a href="{{ path('app_admin_tutorial_index') }}" class="text-gray-700 hover:text-red-600 underline">
+                    ← Retour à la liste
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6">
+            <div class="container mx-auto text-center">
+                <p class="text-sm">© {{ "now"|date("Y") }} Tutoriels. Tous droits réservés.</p>
+                <p class="text-sm mt-2">Fait avec ❤️ pour les apprenants du monde entier.</p>
+            </div>
+        </footer>
+    </body>
+</html>

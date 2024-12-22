@@ -1,37 +1,59 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Tutoriels - Matières{% endblock %}</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        {% block stylesheets %}
+        <style>
+            @layer utilities {
+                .main-color {
+                    @apply text-red-600;
+                }
+            }
+        </style>
+        {% endblock %}
+    </head>
+    <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<section class="container mx-auto px-6 py-16">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Liste des Matières</h1>
 
-{% block title %}Subject index{% endblock %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded-lg shadow">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Nom</th>
+                    <th class="py-3 px-6 text-left">Description</th>
+                    <th class="py-3 px-6 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                {% for subject in subjects %}
+                    <tr class="border-b">
+                        <td class="py-3 px-6">{{ subject.id }}</td>
+                        <td class="py-3 px-6">{{ subject.name }}</td>
+                        <td class="py-3 px-6">{{ subject.description }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <a href="{{ path('app_admin_subject_show', {'id': subject.id}) }}" class="text-blue-600 hover:underline">Voir</a>
+                            <a href="{{ path('app_admin_subject_edit', {'id': subject.id}) }}" class="text-yellow-600 hover:underline ml-4">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-gray-500">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-{% block body %}
-    <h1>Subject index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for subject in subjects %}
-            <tr>
-                <td>{{ subject.id }}</td>
-                <td>{{ subject.name }}</td>
-                <td>{{ subject.description }}</td>
-                <td>
-                    <a href="{{ path('app_admin_subject_show', {'id': subject.id}) }}">show</a>
-                    <a href="{{ path('app_admin_subject_edit', {'id': subject.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_admin_subject_new') }}">Create new</a>
-{% endblock %}
+    <div class="mt-6 text-center">
+        <a href="{{ path('app_admin_subject_new') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
+            Ajouter une nouvelle matière
+        </a>
+    </div>
+</section>
+</body>
+</html>
