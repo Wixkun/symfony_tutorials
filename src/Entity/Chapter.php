@@ -22,8 +22,10 @@ class Chapter
     #[ORM\Column]
     private ?int $position = null;
 
-    #[ORM\ManyToOne(inversedBy: 'chapters')]
+    #[ORM\ManyToOne(targetEntity: Tutorial::class, inversedBy: 'chapters')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Tutorial $tutorial = null;
+    
 
     public function getId(): ?int
     {

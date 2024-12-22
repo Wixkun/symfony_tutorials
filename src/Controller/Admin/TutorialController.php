@@ -4,7 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
-use App\Repository\SubjectRepository; // Import pour les sujets
+use App\Entity\Subject;
+use App\Repository\SubjectRepository; 
 use App\Repository\TutorialRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,7 @@ final class TutorialController extends AbstractController
         return $this->render('admin/tutorial/new.html.twig', [
             'tutorial' => $tutorial,
             'form' => $form->createView(),
-            'subjects' => $subjectRepository->findAll(), // Pass subjects to the view
+            'subjects' => $subjectRepository->findAll(), 
         ]);
     }
 
@@ -53,23 +54,26 @@ final class TutorialController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_tutorial_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager, SubjectRepository $subjectRepository): Response
+    public function edit(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(TutorialType::class, $tutorial);
+        $form = $this->createForm(TutorialType::class, $tutorial); 
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_admin_tutorial_index', [], Response::HTTP_SEE_OTHER);
+    
+            $this->addFlash('success', 'Tutoriel mis à jour avec succès.');
+    
+            return $this->redirectToRoute('app_admin_tutorial_index');
         }
-
+    
         return $this->render('admin/tutorial/edit.html.twig', [
             'tutorial' => $tutorial,
-            'form' => $form->createView(),
-            'subjects' => $subjectRepository->findAll(), // Pass subjects to the view
+            'form' => $form->createView(), 
+            'subjects' => $entityManager->getRepository(Subject::class)->findAll(), 
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_admin_tutorial_delete', methods: ['POST'])]
     public function delete(Request $request, Tutorial $tutorial, EntityManagerInterface $entityManager): Response
