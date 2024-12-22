@@ -34,15 +34,13 @@ class TutorialController extends AbstractController
         $converter = new CommonMarkConverter();
         $contentHtml = $converter->convertToHtml($tutorial->getContent());
 
-        $editingCommentId = $request->query->getInt('edit_comment_id', 0); // Récupère l'ID du commentaire à modifier, 0 par défaut
-
         $newComment = new Comment();
         $newComment->setTutorial($tutorial);
         $newComment->setUser($this->getUser());
-        $form = $this->createForm(CommentType::class, $newComment);
+        $newCommentForm = $this->createForm(CommentType::class, $newComment);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $newCommentForm->handleRequest($request);
+        if ($newCommentForm->isSubmitted() && $newCommentForm->isValid()) {
             $newComment->setCreationDate(new \DateTime());
 
             $entityManager->persist($newComment);
@@ -55,7 +53,10 @@ class TutorialController extends AbstractController
 
         $commentForms = [];
         foreach ($comments as $comment) {
-            $commentForms[$comment->getId()] = $this->createForm(CommentType::class, $comment)->createView();
+            $commentForms[$comment->getId()] = $this->createForm(CommentType::class, $comment, [
+                'action' => $this->generateUrl('comment_edit', ['id' => $comment->getId()]),
+                'method' => 'POST',
+            ])->createView();
         }
 
         return $this->render('tutorial/show.html.twig', [
@@ -64,16 +65,18 @@ class TutorialController extends AbstractController
             'subject' => $subject,
             'comments' => $comments,
             'contentHtml' => $contentHtml,
-            'form' => $form->createView(),
-            'commentForms' => $commentForms,
-            'editingCommentId' => $editingCommentId,
+            'newCommentForm' => $newCommentForm->createView(), 
+            'commentForms' => $commentForms, 
+            'editingCommentId' => $request->get('editingCommentId') ?? null, 
         ]);
+        
     }
+
 
     #[Route(path: '/comment/{id}/edit', name: 'comment_edit', methods: ['POST'])]
     public function editComment(
-        int $id, 
-        Request $request, 
+        int $id,
+        Request $request,
         EntityManagerInterface $entityManager
     ): Response {
         $comment = $entityManager->getRepository(Comment::class)->find($id);
