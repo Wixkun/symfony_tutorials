@@ -46,12 +46,6 @@
                 <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-500 transition ml-4">
                     Modifier
                 </a>
-                <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">
-                        Supprimer
-                    </button>
-                </form>
             </div>
             </div>
         </section>
