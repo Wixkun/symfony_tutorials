@@ -18,21 +18,35 @@ class TutorialType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre',
-                'attr' => ['class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg'],
+                'attr' => [
+                    'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200',
+                    'placeholder' => 'Entrez le titre du tutoriel',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-                'attr' => ['class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg'],
+                'attr' => [
+                    'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200',
+                    'placeholder' => 'Entrez une description',
+                    'rows' => 4,
+                ],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
-                'attr' => ['class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg'],
+                'attr' => [
+                    'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200',
+                    'placeholder' => 'Ajoutez le contenu principal ici',
+                    'rows' => 6,
+                ],
             ])
             ->add('subject', EntityType::class, [
                 'class' => Subject::class,
                 'choice_label' => 'name',
                 'label' => 'Matière',
-                'attr' => ['class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg'],
+                'placeholder' => 'Choisissez une matière',
+                'attr' => [
+                    'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-red-200',
+                ],
             ]);
     }
 
